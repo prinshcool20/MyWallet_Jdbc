@@ -18,14 +18,21 @@ public class AccountService implements Gst,Transaction {
 	@Override
 	public boolean withdraw(int id, double amount) throws InsuffecientFundException, SQLException {
 		double bal=0.0;
-		//dao.updateAccount(ob);
+		
 		PreparedStatement selectSt=con.prepareStatement("select * from account where aid=?");
 		selectSt.setInt(1,id);
 		ResultSet rs1=selectSt.executeQuery();
 		while(rs1.next()) {
 		bal=rs1.getDouble(4);
 		bal=bal-amount;
+		
+		if(bal<1000.0)
+		{
+			bal=rs1.getDouble(4);
+						throw new InsuffecientFundException("Insufficient Fund. It will effect minium balance",bal);
 		}
+		}
+		
 		return dao.updateAccount(id,bal);
 		
 	}
@@ -33,7 +40,7 @@ public class AccountService implements Gst,Transaction {
 	@Override
 	public boolean deposite(int id, double amount) throws SQLException {
 		double bal=0.0;
-		//dao.updateAccount(ob);
+		
 		PreparedStatement selectSt=con.prepareStatement("select * from account where aid=?");
 		selectSt.setInt(1,id);
 		ResultSet rs1=selectSt.executeQuery();

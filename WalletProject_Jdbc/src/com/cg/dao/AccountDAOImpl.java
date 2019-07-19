@@ -39,7 +39,7 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public boolean updateAccount(int id,double amount) throws SQLException {
 		// TODO Auto-generated method stub
-		//accamp.put(ob.getMobile(), ob);
+		
 		PreparedStatement updateSt=con.prepareStatement("update account set balance=? where aid=?");
 		
 		updateSt.setDouble(1,amount);
@@ -53,7 +53,7 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public boolean deleteAccount(int id) throws SQLException {
-		//accamp.remove(ob);
+		
 		PreparedStatement selectSt=con.prepareStatement("delete from account where aid=?");
 		selectSt.setInt(1,id);
 		ResultSet rs1=selectSt.executeQuery();
